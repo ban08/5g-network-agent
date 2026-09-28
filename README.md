@@ -2,6 +2,8 @@
 
 Turns a single Linux machine into a working private 5G network you can talk to: it stands up the network in software, watches it, and lets you ask about it in plain language.
 
+Capstone group project (Projeto Integrador, PE38) for L.EIC at FEUP/FCUP (2025/26).
+
 ## What it does
 
 Boots a full **5G standalone testbed** on one host — an Open5GS core, two base stations (gNBs) and two phones (UEs), with the radio simulated in software — then layers three things on top:
@@ -25,16 +27,3 @@ bash src/launch_stack.sh              # bring the whole stack up (OAI backend)
 RAN_BACKEND=srsran bash src/launch_stack.sh   # or the srsRAN backend
 bash src/launch_stack.sh --stop       # tear it down cleanly
 ```
-
-## What I built
-
-Capstone group project (Projeto Integrador, PE38) for L.EIC at FEUP/FCUP (2025/26). I was the lead contributor. My work:
-
-- **Multi-gNB / multi-UE orchestration** — launching several base stations and phones and keeping their network namespaces and data paths in order.
-- The **metrics and telemetry tooling**, the SQLite cache and the per-entity identity/validation that feed the dashboards.
-- **Integrating the LLM agent with the live network**: single-pass entity extraction from the telemetry, the JSON contract the model answers from, and fixes to keep its answers grounded (including making it answer in Portuguese).
-- **Supervising the stack** with transient systemd units so the core, radio, collector, API and dashboard start and stop reliably, and the end-to-end validation run.
-
-## What I would do differently
-
-Replace the shell-script supervision with a small process manager or containers so the stack is easier to reproduce off this exact host, and separate the agent's retrieval layer from the LLM so the same telemetry queries can be tested without a model loaded.
